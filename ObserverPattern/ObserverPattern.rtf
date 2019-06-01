@@ -1,0 +1,1365 @@
+{\rtf1\ansi\deff3\adeflang1025
+{\fonttbl{\f0\froman\fprq2\fcharset0 Times New Roman;}{\f1\froman\fprq2\fcharset2 Symbol;}{\f2\fswiss\fprq2\fcharset0 Arial;}{\f3\froman\fprq2\fcharset0 Liberation Serif{\*\falt Times New Roman};}{\f4\fswiss\fprq2\fcharset0 Liberation Sans{\*\falt Arial};}{\f5\froman\fprq0\fcharset128 Helvetica{\*\falt Arial};}{\f6\froman\fprq0\fcharset128 Courier{\*\falt Courier New};}{\f7\fnil\fprq2\fcharset0 Droid Sans Fallback;}{\f8\fnil\fprq2\fcharset0 FreeSans;}{\f9\fswiss\fprq0\fcharset128 FreeSans;}}
+{\colortbl;\red0\green0\blue0;\red0\green0\blue109;\red179\green179\blue179;\red15\green112\blue1;\red109\green111\blue3;\red107\green0\blue109;\red107\green0\blue1;\red0\green0\blue128;\red192\green192\blue192;\red0\green128\blue0;\red128\green128\blue0;\red128\green0\blue128;\red128\green0\blue0;\red128\green128\blue128;}
+{\stylesheet{\s0\snext0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393 Normal;}
+{\s15\sbasedon0\snext16\sb240\sa120\keepn\dbch\af7\dbch\af8\afs28\loch\f4\fs28 Heading;}
+{\s16\sbasedon0\snext16\sl288\slmult1\sb0\sa140 Text Body;}
+{\s17\sbasedon16\snext17\sl288\slmult1\sb0\sa140\dbch\af9 List;}
+{\s18\sbasedon0\snext18\sb120\sa120\noline\i\dbch\af9\afs24\ai\fs24 Caption;}
+{\s19\sbasedon0\snext19\noline\dbch\af9 Index;}
+{\s20\sbasedon0\snext20 Preformatted Text;}
+}{\info{\creatim\yr0\mo0\dy0\hr0\min0}{\revtim\yr0\mo0\dy0\hr0\min0}{\printim\yr0\mo0\dy0\hr0\min0}{\comment LibreOffice}{\vern67241986}}\deftab720
+\viewscale100
+{\*\pgdsctbl
+{\pgdsc0\pgdscuse451\pgwsxn12240\pghsxn15840\marglsxn1440\margrsxn1440\margtsxn1440\margbsxn1440\pgdscnxt0 Default Style;}
+{\pgdsc1\pgdscuse451\pgndec\pgwsxn12240\pghsxn15840\marglsxn1134\margrsxn567\margtsxn567\margbsxn567\pgdscnxt1 HTML;}}
+\formshade{\*\pgdscno0}\paperh15840\paperw12240\margl1440\margr1440\margt1440\margb1440\sectd\sbknone\sectunlocked1\pgndec\pgwsxn12240\pghsxn15840\marglsxn1440\margrsxn1440\margtsxn1440\margbsxn1440\ftnbj\ftnstart1\ftnrstcont\ftnnar\aenddoc\aftnrstcont\aftnstart1\aftnnrlc
+\pgndec\pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640{\cf1\rtlch \ltrch\loch\fs24\loch\f5
+Design Pattern behind Qt Signal & Slot:}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\cf1\rtlch \ltrch\loch\fs24\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640{\cf1\rtlch \ltrch\loch\fs24\loch\f5
+To begin with, Qt Signal & Slot is the essential piece of bit that enables application developers to implement the complex of scenarios related to events and subsequent actions gracefully. Signal & Slots primarily gives the application developers the power of asynchronous programming where on an event arrival, a suitable action should happen. The benefits of asynchronous programming are numerous such as loosely coupled modules, flexibility of design, leverage of contract based communication between two separate entities, reusability, resource efficient and much more.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\cf1\rtlch \ltrch\loch\fs24\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640{\cf1\rtlch \ltrch\loch\fs24\loch\f5
+What makes Qt\uc2 \u8217\'81\'66s signal and Slots more powerful are its features and flexible ways of using it for example, you can use C++11 lambda functions as slots, macro defining of based signals and slots, declaring functions for function pointers. All these vary with the type of requirements you have. Furthermore, you can have the slots threaded or synchronous by queuing the event arrivals and much more. However, if you ask me what it does, it simply implements the \uc1 }{\cf1\b\rtlch \ltrch\loch\fs24\loch\f5
+Observer Design pattern }{\cf1\b0\rtlch \ltrch\loch\fs24\loch\f5
+where the change in one entity (Subject) will pronounce it to another interested entities (Observer).}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\cf1\b0\rtlch \ltrch\loch\fs24\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640{\cf1\b0\rtlch \ltrch\loch\fs24\loch\f5
+Now, consider a situation where your new software requirement asks you }{\cf1\b\rtlch \ltrch\loch\fs24\loch\f5
+NOT}{\cf1\b0\rtlch \ltrch\loch\fs24\loch\f5
+ to code in Qt C++ rather just in C++ using Standard Library for an embedded device. Barring the use of any advanced library such as boost. And situation arises in which only on a user event, state of the software should change. Here, you cannot simply go polling, it will be expensive for the system. Imagine, on such a board you are to run 30 odd applications and they are all polling each other for events. This will cause board to overheat, shortening overall life and resulting in maintenance complications for both software and hardware. You must be missing the signals and slots for such a requirement. The good news is, you can write your own signal and slot functionality by applying the observer pattern yourself. I have done it myself and so should you. That said, you should keep in mind that Qt\uc2 \u8217\'81\'66s Signal and Slot implementation is already very mature and uses MOC for generating code to setup signal and slot, this article only touches the tip of the iceberg and does so to solve purpose. However, that maturity scale with persistence and hard work can be achieved. \uc1 }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\cf1\b0\rtlch \ltrch\loch\fs24\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640{\cf1\b0\rtlch \ltrch\loch\fs24\loch\f5
+Before wasting anymore time, let us look at the code class by class and examine the pattern carefully. Everyone has a different way of thinking and likewise they code differently too. The technique I have used for demonstrating what is Observer pattern and how you could use is one of many possible ways of using it in C++.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\cf1\b0\rtlch \ltrch\loch\fs24\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640{\cf1\b0\rtlch \ltrch\loch\fs24\loch\f5
+Some of the header files.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\cf1\b0\rtlch \ltrch\loch\fs24\loch\f5
+
+\par \pard\plain \s20\sl280\slmult0{\cf8\expnd0\expndtw0\b0\kerning1\rtlch \ltrch\loch\fs24\loch\f5
+#include}{\cf9\expnd0\expndtw0\b0\kerning1\rtlch \ltrch\loch\fs24\loch\f5
+ }{\cf10\expnd0\expndtw0\b0\kerning1\rtlch \ltrch\loch\fs24\loch\f5
+<iostream>}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf8\rtlch \ltrch\loch
+#include}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+<functional>}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf8\rtlch \ltrch\loch
+#include}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+<memory>}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf8\rtlch \ltrch\loch
+#include}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+<vector>}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf8\rtlch \ltrch\loch
+#include}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+<unistd.h>}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf8\rtlch \ltrch\loch
+/**}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf8\rtlch \ltrch\loch
+Namespace}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+defined,}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+an}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+important}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+bit}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+that}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+protects}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+your}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+code}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+from}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+ambiguity}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+in}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+long}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+run.}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+Here}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+I}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+have}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+written}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+a}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+template}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+based}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+signalID}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+structure}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+that}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+for}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+generic}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+side}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+to}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+signal}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+keeping}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+in}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+mind}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+future}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+usage.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf8\rtlch \ltrch\loch
+If}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+we}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+examine}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+it}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+closely,}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+template}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+type}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+R}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+used}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+as}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+argument}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+for}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+callback.}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+Templates}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+here}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+become}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+a}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+good}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+choice}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+because}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+we}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+simply}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+cannot}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+have}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+too}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+many}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+declarations}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+for}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+each}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+varying}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+argument}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+that}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+signal}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+will}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+have}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+to}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+support.}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+Variadic}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+templates}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+can}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+also}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+be}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+used}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+here}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+to}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+support}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+unknown}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+number}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+of}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+arguments}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+by}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+signal.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf8\rtlch \ltrch\loch
+Callback}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+stored}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+in}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+std::function,}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+this}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+part}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+of}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+C++11}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+standard}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+and}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+acts}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+like}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+a}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+function}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+pointer.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf8\rtlch \ltrch\loch
+*/}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf11\rtlch \ltrch\loch
+namespace}{\cf9\rtlch \ltrch\loch
+ }{\cf12\rtlch \ltrch\loch
+ObserverParent}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+\{}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf11\rtlch \ltrch\loch
+template}{\cf1\rtlch \ltrch\loch
+<}{\cf11\rtlch \ltrch\loch
+typename}{\cf9\rtlch \ltrch\loch
+ }{\cf12\rtlch \ltrch\loch
+R}{\cf1\rtlch \ltrch\loch
+>}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf11\rtlch \ltrch\loch
+struct}{\cf9\rtlch \ltrch\loch
+ }{\cf12\rtlch \ltrch\loch
+signalID}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+\{}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf10\rtlch \ltrch\loch
+//Connect}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+function}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+here}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+accepts}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+callback}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+of}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+class}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+that}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+wants}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+to}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+observe.}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+This}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+callback}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+pushed}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+into}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+a}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+vector}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+that}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+called}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+when}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+signal}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+fired.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf11\rtlch \ltrch\loch
+void}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+connect(}{\cf12\rtlch \ltrch\loch
+std}{\cf1\rtlch \ltrch\loch
+::}{\rtlch \ltrch\loch
+function}{\cf1\rtlch \ltrch\loch
+<}{\cf11\rtlch \ltrch\loch
+void}{\cf1\rtlch \ltrch\loch
+(}{\cf12\rtlch \ltrch\loch
+R}{\cf1\rtlch \ltrch\loch
+)>}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+slotFunc)}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+\{}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+        }{\cf13\rtlch \ltrch\loch
+slotVect}{\cf1\rtlch \ltrch\loch
+.push_back(slotFunc);}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf9\rtlch \ltrch
+    }{\cf1\rtlch \ltrch\loch
+\}}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf10\rtlch \ltrch\loch
+//Fire}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+function}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+that}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+called}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+when}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+notification}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+to}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+observers}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+registered}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+in}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+this}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+signal}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+to}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+be}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+sent.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf11\rtlch \ltrch\loch
+void}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+fire(}{\cf12\rtlch \ltrch\loch
+R}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+&val)}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+\{}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+        }{\cf11\rtlch \ltrch\loch
+for}{\cf1\rtlch \ltrch\loch
+(}{\cf11\rtlch \ltrch\loch
+auto}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+&slotFuncs:}{\cf9\rtlch \ltrch\loch
+ }{\cf13\rtlch \ltrch\loch
+slotVect}{\cf1\rtlch \ltrch\loch
+)}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+\{}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+            }{\cf1\rtlch \ltrch\loch
+slotFuncs(val);}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+        }{\cf1\rtlch \ltrch\loch
+\}}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf9\rtlch \ltrch
+    }{\cf1\rtlch \ltrch\loch
+\}}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf11\rtlch \ltrch\loch
+private}{\cf1\rtlch \ltrch\loch
+:}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf10\rtlch \ltrch\loch
+//Stores}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+all}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+callback}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+functions.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf12\rtlch \ltrch\loch
+std}{\cf1\rtlch \ltrch\loch
+::}{\cf12\rtlch \ltrch\loch
+vector}{\cf1\rtlch \ltrch\loch
+<}{\cf12\rtlch \ltrch\loch
+std}{\cf1\rtlch \ltrch\loch
+::}{\rtlch \ltrch\loch
+function}{\cf1\rtlch \ltrch\loch
+<}{\cf11\rtlch \ltrch\loch
+void}{\cf1\rtlch \ltrch\loch
+(}{\cf12\rtlch \ltrch\loch
+R}{\cf1\rtlch \ltrch\loch
+)>>}{\cf9\rtlch \ltrch\loch
+ }{\cf13\rtlch \ltrch\loch
+slotVect}{\cf1\rtlch \ltrch\loch
+;}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf1\rtlch \ltrch\loch
+\};}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf8\rtlch \ltrch\loch
+/**}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf8\rtlch \ltrch\loch
+Below}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+sample}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+class}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+subject.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf8\rtlch \ltrch\loch
+In}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+each}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+and}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+every}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+observer}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+pattern,}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+subject}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+has}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+to}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+extend}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+a}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+contract}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+mentioning}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+what}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+kind}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+of}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+service}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+it}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+delivers.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf8\rtlch \ltrch\loch
+On}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+basis}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+of}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+kind}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+of}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+service}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+it}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+offers,}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+it}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+will}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+have}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+unique}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+arguments}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+related}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+to}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+it.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf8\rtlch \ltrch\loch
+Observers}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+will}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+have}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+to}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+register}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+themselves}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+using}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+signals}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+directly.}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+The}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+reason}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+I}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+have}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+signals}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+directly}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+for}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+registration}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+so that}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+you\uc2 \u8217\'81\'66d\uc1 }{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+end}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+up}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+right}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+in}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+queue}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+of}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+callbacks.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf8\rtlch \ltrch\loch
+This}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+type}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+of}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+callback}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+definition}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+suggested.}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+The}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+benefit}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+of}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+this}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+is,}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+much}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+cleaner}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+contract,}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+no}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+hidden}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+switch}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+cases}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+or}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+if-else}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+conditions.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf8\rtlch \ltrch\loch
+*/}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf11\rtlch \ltrch\loch
+class}{\cf9\rtlch \ltrch\loch
+ }{\cf12\rtlch \ltrch\loch
+Subject}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+\{}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf11\rtlch \ltrch\loch
+public}{\cf1\rtlch \ltrch\loch
+:}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf9\rtlch \ltrch
+    }{\cf12\rtlch \ltrch\loch
+Subject}{\cf1\rtlch \ltrch\loch
+()}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+\{}{\cf9\rtlch \ltrch\loch
+                                                         }{\cf10\rtlch \ltrch\loch
+//Constructor.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf9\rtlch \ltrch
+    }{\cf1\rtlch \ltrch\loch
+\}}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf10\rtlch \ltrch\loch
+//RaiseEvent}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+a}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+mock}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+function}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+that}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+gets}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+called}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+from}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+Main.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf11\rtlch \ltrch\loch
+void}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+RaiseEvent(}{\cf11\rtlch \ltrch\loch
+int}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+&val)}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+\{}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+        }{\cf13\rtlch \ltrch\loch
+sig1}{\cf1\rtlch \ltrch\loch
+.fire(val);}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf9\rtlch \ltrch
+    }{\cf1\rtlch \ltrch\loch
+\}}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf10\rtlch \ltrch\loch
+//RaiseEvent}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+a}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+mock}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+function}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+that}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+gets}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+called}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+from}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+Main.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf11\rtlch \ltrch\loch
+void}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+RaiseEvent2(}{\cf12\rtlch \ltrch\loch
+std}{\cf1\rtlch \ltrch\loch
+::}{\cf12\rtlch \ltrch\loch
+string}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+&str)}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+\{}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+        }{\cf13\rtlch \ltrch\loch
+sig2}{\cf1\rtlch \ltrch\loch
+.fire(str);}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf1\rtlch \ltrch\loch
+\}}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf11\rtlch \ltrch\loch
+public}{\cf1\rtlch \ltrch\loch
+:}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf12\rtlch \ltrch\loch
+ObserverParent}{\cf1\rtlch \ltrch\loch
+::}{\cf12\rtlch \ltrch\loch
+signalID}{\cf1\rtlch \ltrch\loch
+<}{\cf11\rtlch \ltrch\loch
+int}{\cf1\rtlch \ltrch\loch
+>}{\cf9\rtlch \ltrch\loch
+ }{\cf13\rtlch \ltrch\loch
+sig1}{\cf1\rtlch \ltrch\loch
+;}{\cf9\rtlch \ltrch\loch
+                 }{\cf10\rtlch \ltrch\loch
+//This}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+signal}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+1}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+of}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+argument}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+of}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+type}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+int.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf12\rtlch \ltrch\loch
+ObserverParent}{\cf1\rtlch \ltrch\loch
+::}{\cf12\rtlch \ltrch\loch
+signalID}{\cf1\rtlch \ltrch\loch
+<}{\cf12\rtlch \ltrch\loch
+std}{\cf1\rtlch \ltrch\loch
+::}{\cf12\rtlch \ltrch\loch
+string}{\cf1\rtlch \ltrch\loch
+>}{\cf9\rtlch \ltrch\loch
+ }{\cf13\rtlch \ltrch\loch
+sig2}{\cf1\rtlch \ltrch\loch
+;}{\cf9\rtlch \ltrch\loch
+                 }{\cf10\rtlch \ltrch\loch
+//This}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+signal}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+2}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+of}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+argument}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+of}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+type}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+string.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf1\rtlch \ltrch\loch
+\};}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf8\rtlch \ltrch\loch
+/**}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf8\rtlch \ltrch\loch
+If}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+you}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+look}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+closely,}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+Observer}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+slots}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+are}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+registered}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+with}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+Subject}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+in}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+constructor}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+of}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+this}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+class.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf8\rtlch \ltrch\loch
+Slots}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+will}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+perform}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+their}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+respective}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+action}{\cf8\rtlch \ltrch\loch
+s}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+when}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+an}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+event}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+received.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf8\rtlch \ltrch\loch
+It}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+necessary}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+that}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+Slots}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+match}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+number}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+of}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+arguments}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+and}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+their}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+types}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+with}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+their}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+signal}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+counter}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+parts.}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+Not}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+complying}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+to}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+this}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+rule}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+will}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+result}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+in}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+compiler}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+errors.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf8\rtlch \ltrch\loch
+Further,}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+it}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+also}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+not}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+necessary}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+that}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+for}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+every}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+Subject}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+signal}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+there}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+has}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+to}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+be}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+a}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+Observer}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+slot.}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+It}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+upto}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+Observer}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+whether}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+it}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+wants}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+to}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+be}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+registered}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+with}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+every}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+Subject}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+signal}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+or}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+not.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf8\rtlch \ltrch\loch
+*/}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0\cf8\rtlch \ltrch\loch
+
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf11\rtlch \ltrch\loch
+class}{\cf9\rtlch \ltrch\loch
+ }{\cf12\rtlch \ltrch\loch
+Observer}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+\{}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf11\rtlch \ltrch\loch
+public}{\cf1\rtlch \ltrch\loch
+:}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf10\rtlch \ltrch\loch
+//Constructor:}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+Here}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+we}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+register}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+slots}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+for}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+events.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf12\rtlch \ltrch\loch
+Observer}{\cf1\rtlch \ltrch\loch
+(}{\cf12\rtlch \ltrch\loch
+Subject}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+&subObj)}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+\{}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+        }{\cf1\rtlch \ltrch\loch
+subObj.}{\cf13\rtlch \ltrch\loch
+sig1}{\cf1\rtlch \ltrch\loch
+.connect(}{\cf12\rtlch \ltrch\loch
+std}{\cf1\rtlch \ltrch\loch
+::}{\rtlch \ltrch\loch
+bind}{\cf1\rtlch \ltrch\loch
+(&}{\cf12\rtlch \ltrch\loch
+Observer}{\cf1\rtlch \ltrch\loch
+::}{\rtlch \ltrch\loch
+slot1}{\cf1\rtlch \ltrch\loch
+,}{\cf9\rtlch \ltrch\loch
+ }{\cf11\rtlch \ltrch\loch
+this}{\cf1\rtlch \ltrch\loch
+,}{\cf9\rtlch \ltrch\loch
+ }{\cf12\rtlch \ltrch\loch
+std}{\cf1\rtlch \ltrch\loch
+::}{\rtlch \ltrch\loch
+placeholders}{\cf1\rtlch \ltrch\loch
+::}{\rtlch \ltrch\loch
+_1}{\cf1\rtlch \ltrch\loch
+));}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+        }{\cf1\rtlch \ltrch\loch
+subObj.}{\cf13\rtlch \ltrch\loch
+sig2}{\cf1\rtlch \ltrch\loch
+.connect(}{\cf12\rtlch \ltrch\loch
+std}{\cf1\rtlch \ltrch\loch
+::}{\rtlch \ltrch\loch
+bind}{\cf1\rtlch \ltrch\loch
+(&}{\cf12\rtlch \ltrch\loch
+Observer}{\cf1\rtlch \ltrch\loch
+::}{\rtlch \ltrch\loch
+slot2}{\cf1\rtlch \ltrch\loch
+,}{\cf9\rtlch \ltrch\loch
+ }{\cf11\rtlch \ltrch\loch
+this}{\cf1\rtlch \ltrch\loch
+,}{\cf9\rtlch \ltrch\loch
+ }{\cf12\rtlch \ltrch\loch
+std}{\cf1\rtlch \ltrch\loch
+::}{\rtlch \ltrch\loch
+placeholders}{\cf1\rtlch \ltrch\loch
+::}{\rtlch \ltrch\loch
+_1}{\cf1\rtlch \ltrch\loch
+));}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf9\rtlch \ltrch
+    }{\cf1\rtlch \ltrch\loch
+\}}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf10\rtlch \ltrch\loch
+//Slot}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+gets}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+event}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+and}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+performs}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+desired}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+action.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf11\rtlch \ltrch\loch
+void}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+slot1(}{\cf11\rtlch \ltrch\loch
+int}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+intVal)}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+\{}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+        }{\cf12\rtlch \ltrch\loch
+std}{\cf1\rtlch \ltrch\loch
+::}{\rtlch \ltrch\loch
+cout}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+<<}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+"Integer}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+value}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+"}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+<<}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+intVal}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+<<}{\cf9\rtlch \ltrch\loch
+ }{\cf12\rtlch \ltrch\loch
+std}{\cf1\rtlch \ltrch\loch
+::}{\rtlch \ltrch\loch
+endl}{\cf1\rtlch \ltrch\loch
+;}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf9\rtlch \ltrch
+    }{\cf1\rtlch \ltrch\loch
+\}}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf11\rtlch \ltrch\loch
+void}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+slot2(}{\cf12\rtlch \ltrch\loch
+std}{\cf1\rtlch \ltrch\loch
+::}{\cf12\rtlch \ltrch\loch
+string}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+str)}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+\{}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+        }{\cf12\rtlch \ltrch\loch
+std}{\cf1\rtlch \ltrch\loch
+::}{\rtlch \ltrch\loch
+cout}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+<<}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+"String}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+value}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+"}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+<<}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+str}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+<<}{\cf9\rtlch \ltrch\loch
+ }{\cf12\rtlch \ltrch\loch
+std}{\cf1\rtlch \ltrch\loch
+::}{\rtlch \ltrch\loch
+endl}{\cf1\rtlch \ltrch\loch
+;}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf1\rtlch \ltrch\loch
+\}}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf1\rtlch \ltrch\loch
+\};}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf1\rtlch \ltrch\loch
+\}}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf10\rtlch \ltrch\loch
+//Main}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+here}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+is}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+more}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+of}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+a}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+object}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+creator}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+as}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+well}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+as}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+one}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+who}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+raises}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+events}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+of}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+Subject}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+which}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+in}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+turn}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+call}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+the}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+slots.}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf11\rtlch \ltrch\loch
+int}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+main(}{\cf11\rtlch \ltrch\loch
+int}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+argc,}{\cf9\rtlch \ltrch\loch
+ }{\cf11\rtlch \ltrch\loch
+char}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+*argv[])}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf1\rtlch \ltrch\loch
+\{}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf12\rtlch \ltrch\loch
+ObserverParent}{\cf1\rtlch \ltrch\loch
+::}{\cf12\rtlch \ltrch\loch
+Subject}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+sub1;}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf9\rtlch \ltrch
+    }{\cf12\rtlch \ltrch\loch
+ObserverParent}{\cf1\rtlch \ltrch\loch
+::}{\cf12\rtlch \ltrch\loch
+Observer}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+obse1(sub1);}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf9\rtlch \ltrch
+    }{\cf1\rtlch \ltrch\loch
+sleep(}{\cf8\rtlch \ltrch\loch
+2}{\cf1\rtlch \ltrch\loch
+);}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf11\rtlch \ltrch\loch
+auto}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+i}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+=}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+1}{\cf1\rtlch \ltrch\loch
+;}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf12\rtlch \ltrch\loch
+std}{\cf1\rtlch \ltrch\loch
+::}{\cf12\rtlch \ltrch\loch
+string}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+str}{\cf9\rtlch \ltrch\loch
+ }{\cf1\rtlch \ltrch\loch
+=}{\cf9\rtlch \ltrch\loch
+ }{\cf10\rtlch \ltrch\loch
+"Vipul"}{\cf1\rtlch \ltrch\loch
+;}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf1\rtlch \ltrch\loch
+sub1.RaiseEvent(i);}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf9\rtlch \ltrch
+    }{\cf1\rtlch \ltrch\loch
+sub1.RaiseEvent2(str);}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa0{\cf9\rtlch \ltrch
+    }{\cf11\rtlch \ltrch\loch
+return}{\cf9\rtlch \ltrch\loch
+ }{\cf8\rtlch \ltrch\loch
+0}{\cf1\rtlch \ltrch\loch
+;}
+\par \pard\plain \s20\li0\ri0\lin0\rin0\fi0\sb0\sa283{\cf1\rtlch \ltrch\loch
+\}}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\sl280\slmult0\cf1\expnd0\expndtw0\b0\kerning1\rtlch \ltrch\loch\fs24\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640{\cf1\expnd0\expndtw0\b0\kerning1\rtlch \ltrch\loch\fs24\loch\f5
+In a real world scenario, subject can be anything from device drivers(user space) to GUI views that forward }{\cf1\expnd0\expndtw0\b0\kerning1\rtlch \ltrch\loch\fs24\loch\f5
+user}{\cf1\expnd0\expndtw0\b0\kerning1\rtlch \ltrch\loch\fs24\loch\f5
+ events happening on their side. Observer are the ones that are dependent on subjects }{\cf1\expnd0\expndtw0\b0\kerning1\rtlch \ltrch\loch\fs24\loch\f5
+for information}{\cf1\expnd0\expndtw0\b0\kerning1\rtlch \ltrch\loch\fs24\loch\f5
+. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\rtlch \ltrch\loch
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640{\cf1\expnd0\expndtw0\b0\kerning1\rtlch \ltrch\loch\fs24\loch\f5
+Observer Pattern works in two variations. 1) One to Many, where there is one event and many observers. Other variation is One to One, where one event is mapped to only one Observer. Pattern-wise if we think, this restriction is perogative of the developer whether to have such a restriction or not. Another thing to note here is that any class can be an Observer and Subject at the same time, nitty gritties need to be sorted out though. \line \line This is the beauty of this pattern, one can achieve huge flexibility in their design when following this approach.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\cf1\expnd0\expndtw0\b0\kerning1\rtlch \ltrch\loch\fs24\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640{\cf1\expnd0\expndtw0\b0\kerning1\rtlch \ltrch\loch\fs24\loch\f5
+You see with the above example how we can implement observer pattern and using this we can simplify many of our use cases related to waiting for some event. The above example, like I said, is just one way of implementing it, one can do a lot with simple function pointers and without classes the C way. That said, this is not limited to C++ or C for that matter. You can use this pattern with almost all the languages out there.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\cf1\expnd0\expndtw0\b0\kerning1\rtlch \ltrch\loch\fs24\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\cf1\expnd0\expndtw0\b0\kerning1\rtlch \ltrch\loch\fs24\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\cf1\expnd0\expndtw0\b0\kerning1\rtlch \ltrch\loch\fs24\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\cf1\expnd0\expndtw0\b0\kerning1\rtlch \ltrch\loch\fs24\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\cf1\expnd0\expndtw0\b0\kerning1\rtlch \ltrch\loch\fs24\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af7\langfe2052\dbch\af8\afs24\alang1081\loch\f3\fs24\lang16393\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\rtlch \ltrch\loch
+
+\par }
